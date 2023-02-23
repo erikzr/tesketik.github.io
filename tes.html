@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tes Mengetik</title>
+	<style>
+		body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        }
+
+        h1 {
+        margin-top: 50px;
+        }
+
+        #text {
+        font-size: 30px;
+        margin-top: 30px;
+        }
+
+        input[type="text"] {
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        padding: 10px;
+        font-size: 20px;
+        margin: 10px;
+        width: 400px;
+        }
+
+        button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 20px;
+        padding: 10px 20px;
+        }
+
+        button:hover {
+        background-color: #3e8e41;
+        }
+
+        input[type="text"]:disabled {
+        background-color: #f2f2f2;
+        color: #666;
+        cursor: not-allowed;
+        }
+
+	</style>
+</head>
+<body>
+	<h1>Tes Mengetik</h1>
+	<p id="text"><b></b></p>
+	<input type="text" id="input" oninput="checkInput()">
+	<button onclick="startTest()">Mulai</button>
+
+	<script>
+		var text = "kucing anjing bunga pohon air rumah matahari angin es batu mobil sepeda motor listrik kapal pesawat helikopter piring sendok garpu gelas kursi meja sofa buku majalah koran ";
+		var words = text.split(" ");
+		var wordIndex = 0;
+		var startTime;
+
+		function startTest() {
+			wordIndex = 0;
+			startTime = new Date().getTime();
+			document.getElementById("text").innerHTML = "<b>" + text + "</b>";
+			document.getElementById("input").value = "";
+			document.getElementById("input").disabled = false;
+			document.getElementById("input").focus();
+		}
+
+		function checkInput() {
+			var input = document.getElementById("input").value;
+			if (input.endsWith(" ")) {
+				if (input.trim() == words[wordIndex]) {
+					wordIndex++;
+                    document.getElementById("text").innerHTML = words.slice(wordIndex).join(" ");
+					document.getElementById("input").value = "";
+				}
+				if (wordIndex >= words.length) {
+					endTest();
+				}
+			}
+		}
+
+		function endTest() {
+			var endTime = new Date().getTime();
+			var duration = (endTime - startTime) / 1000;
+			var wpm = Math.round(words.length / duration * 60);
+			var accuracy = Math.round(wordIndex / words.length * 100);
+			var result = "Anda mengetik " + words.length + " kata dalam " + duration + " detik, dengan kecepatan " + wpm + " WPM dan akurasi " + accuracy + "%.";
+			document.getElementById("input").disabled = true;
+			alert(result);
+		}
+	</script>
+</body>
+</html>
